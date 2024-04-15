@@ -3,22 +3,22 @@ margin:0px;
 padding:0px;
 }
 #container{
-background-color:green;
+/* background-color:green; */
 
 }
 #timmerParent{
 float:left;
 height:600px;
 width:500px;
-background-color:blue;
+/* background-color:blue; */
 margin-left:100px;
 }
 #bubbleMain{
 float:left;
-height:600px;
-width:600px;
-background-color:red;
-margin-left:250px;
+height:650px;
+width:700px;
+/* background-color:red; */
+margin-left:100px;
 }
 #timmer{
 height:200px;
@@ -29,7 +29,7 @@ margin:50px;
 #score{
 height:200px;
 width:300px;
-background-color:green;
+/* background-color:green; */
 margin:50px;
 }
 .scoreDisplay{
