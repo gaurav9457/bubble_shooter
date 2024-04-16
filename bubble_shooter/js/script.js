@@ -96,6 +96,7 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
 function generateRandomColor() {
     const colors = ['red', 'green', 'blue', 'yellow']; 
     return colors[Math.floor(Math.random() * colors.length)];
@@ -134,32 +135,164 @@ function createShooterBubble(context) {
 }
 
 
+// function createShooterBubble(context) {
+//     const bubbleRadius = 20;
+//     const shooterX = canvasFrame.width / 2;
+//     const shooterY = canvasFrame.height - bubbleRadius;
+
+//     // Calculate angle between shooter and click event
+//    // const angle = Math.atan2(clickEvent.offsetY - shooterY, clickEvent.offsetX - shooterX);
+
+//     // Calculate new arrow position based on the angle
+//     const arrowX = shooterX + Math.cos(angle) * bubbleRadius;
+//     const arrowY = shooterY + Math.sin(angle) * bubbleRadius;
+
+//     context.beginPath();
+//     context.arc(shooterX, shooterY, bubbleRadius, 0, Math.PI * 2);
+
+//     const color = generateRandomColor();
+//     context.fillStyle = color;
+//     context.fill();
+//     context.closePath();
+
+//     const arrowWidth = 10;
+//     const arrowHeight = 20;
+//     context.beginPath();
+//     context.moveTo(arrowX + arrowWidth / 2, arrowY - arrowHeight);
+//     context.lineTo(arrowX - arrowWidth / 2, arrowY - arrowHeight);
+//     context.lineTo(arrowX, arrowY);
+//     context.closePath();
+//     context.fillStyle = 'black';
+//     context.fill();
+
+//     shooterBubble = { x: shooterX, y: shooterY, radius: bubbleRadius, color: color, speed: 5 };
+// }
 
 
-function moveShooterBubbleToward(clickedBubble) {
-    console.log("moveFun");
-    const dx = clickedBubble.x - shooterBubble.x;
-    const dy = clickedBubble.y - shooterBubble.y;
+
+// function moveShooterBubbleToward(clickedBubble) {
+//     const dx = clickedBubble.x - shooterBubble.x;
+//     const dy = clickedBubble.y - shooterBubble.y;
 
     
-    const distance = Math.sqrt(dx ** 2 + dy ** 2);
+//     const distance = Math.sqrt(dx ** 2 + dy ** 2);
 
     
-    const unitX = dx / distance;
-    const unitY = dy / distance;
+//     const unitX = dx / distance;
+//     const unitY = dy / distance;
+
+    
+//     const speed = 5;
 
    
-    const speed = 3;
+//     shooterBubble.x += unitX * speed;
+//     shooterBubble.y += unitY * speed;
 
-    
-    shooterBubble.x += unitX * speed;
-    shooterBubble.y += unitY * speed;
+//     // Redraw the canvas to reflect the updated position of the shooterBubble
+//     redrawCanvas();
 
+//     // Check if the shooterBubble has reached the clicked bubble
+//     if (distance < shooterBubble.radius + clickedBubble.radius) {
+//         // Perform actions when the shooterBubble reaches the clicked bubble
+//         // For example, remove the clicked bubble or perform other game logic
+//         console.log("ShooterBubble reached the clicked bubble");
+//     } else {
+//         // If the shooterBubble hasn't reached the clicked bubble yet, continue moving
+//         requestAnimationFrame(() => moveShooterBubbleToward(clickedBubble));
+//     }
+// }
+
+// function createShooterBubble(context, canvasFrame) {
+//     const bubbleRadius = 20;
+//     const shooterX = canvasFrame.width / 2;
+//     const shooterY = canvasFrame.height - bubbleRadius;
   
-    //redrawCanvas();
-	
-	
+//     // Create the bubble element
+//     context.beginPath();
+//     context.arc(shooterX, shooterY, bubbleRadius, 0, Math.PI * 2);
+//     const color = generateRandomColor();
+//     context.fillStyle = color;
+//     context.fill();
+//     context.closePath();
+  
+//     // Calculate arrow dimensions and position relative to click (assuming clickY)
+//     const arrowWidth = 10;
+//     const arrowHeight = 20;
+//     let clickY; // Placeholder for user click position on Y-axis
+  
+//     // Function to rotate the arrow based on click position
+//     function rotateArrow(clickY) {
+//       context.beginPath();
+//       const arrowBaseY = shooterY - bubbleRadius - arrowHeight; // Base Y-coordinate
+//       const clickDeltaY = clickY - arrowBaseY; // Click offset from base
+  
+//       // Calculate rotation angle based on click position (adjust range or behavior as needed)
+//       const rotationAngle = Math.min(Math.max(clickDeltaY / bubbleRadius, -0.5), 0.5) * Math.PI; // Clamp angle between -90 and 90 degrees
+  
+//       // Translate context to shooter position for rotation
+//       context.translate(shooterX, arrowBaseY);
+//       context.rotate(rotationAngle);
+  
+//       // Draw the arrow shape
+//       context.moveTo(arrowWidth / 2, 0);
+//       context.lineTo(-arrowWidth / 2, 0);
+//       context.lineTo(0, -arrowHeight);
+//       context.closePath();
+//       context.fillStyle = 'black';
+//       context.fill();
+  
+//       // Reset context translation after drawing
+//       context.translate(-shooterX, -arrowBaseY);
+//     }
+  
+//     // Event listener for click interaction (replace with your event handling mechanism)
+//     canvasFrame.addEventListener('click', (event) => {
+//       clickY = event.clientY;
+//       rotateArrow(clickY);
+//     });
+  
+//     // Return the shooter bubble object with basic properties
+//     return {
+//       x: shooterX,
+//       y: shooterY,
+//       radius: bubbleRadius,
+//       color: color,
+//       speed: 5,
+//     };
+//   }
+
+function moveBubbleTowardClickedBubble(bubble, targetBubble) {
+    const speed = 2; // Adjust speed as needed
+    const dx = targetBubble.x - bubble.x;
+    const dy = targetBubble.y - bubble.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const steps = distance / speed;
+
+    let step = 0;
+
+    function animate() {
+        if (step >= steps) {
+            bubble.x = targetBubble.x;
+            bubble.y = targetBubble.y;
+            redrawCanvas();
+            return;
+        }
+
+        step++;
+
+        bubble.x += dx / steps;
+        bubble.y += dy / steps;
+
+        redrawCanvas();
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
 }
+
+
+
 
 canvasFrame.addEventListener('click', function(event) {
      let clickedBubble = null;
@@ -188,7 +321,7 @@ canvasFrame.addEventListener('click', function(event) {
             break;
         }
     }
-
+    
     function areAdjacentAndSameColor(bubble1, bubble2) {
     const dx = bubble1.x - bubble2.x;
     const dy = bubble1.y - bubble2.y;
@@ -210,17 +343,16 @@ canvasFrame.addEventListener('click', function(event) {
 
         console.log(clickedBubble.color, "Clicked on color bubble");
         console.log(shooterBubble.color, "Clicked on color shooterbubble");
-        
+        //----------------------------------------------------------- ---------Color matched--------------------------------------
         if (clickedBubble.color === shooterBubble.color) {
             console.log("Colors match");
            score += 200;
 		   displayScore(score);
-           // bubbles = bubbles.filter(bubble => bubble.color !== clickedBubble.color);
-		   moveShooterBubbleToward(clickedBubble);
+           
+         //  moveBubbleTowardClickedBubble(clickedBubble,shooterBubble);
+           // moveBubbleTowardClickedEvent(clickedBubble, event);
+          // moveBubbleTowardClickedBubble(clickedBubble, event);
 
-		 // setTimeout(function(){
-		 // requestAnimationFrame(() =>console.log("animation"), moveShooterBubbleToward(clickedBubble));
-		  //},2000);
 		   
             bubbles = bubbles.filter(bubble => {
               return !areAdjacentAndSameColor(clickedBubble, bubble);
@@ -250,7 +382,7 @@ canvasFrame.addEventListener('click', function(event) {
                
                 const adjacentX = adjacentBubble.x;
                 const adjacentY = adjacentBubble.y + 2 * adjacentBubble.radius + shooterBubble.radius; // Adjust as needed
-                
+                //moveShooterBubbleToward(clickedBubble); 
                 const newBubble = {
                     x: adjacentX,
                     y: adjacentY,
@@ -277,7 +409,7 @@ canvasFrame.addEventListener('click', function(event) {
         console.log("Clicked outside of any bubble");
 
        
-       let nearestBubble = null;
+        let nearestBubble = null;
         let minDistance = Infinity;
         for (let i = 0; i < bubbles.length; i++) {
             const bubble = bubbles[i];
@@ -287,12 +419,10 @@ canvasFrame.addEventListener('click', function(event) {
                 minDistance = distance;
             }
         }
-
-       
+    
         if (nearestBubble) {
             const adjacentX = nearestBubble.x;
             const adjacentY = nearestBubble.y + 2 * nearestBubble.radius + shooterBubble.radius; 
-           // moveShooterBubbleTowards(clickedBubble);
             const newBubble = {
                 x: adjacentX,
                 y: adjacentY,
@@ -301,7 +431,7 @@ canvasFrame.addEventListener('click', function(event) {
             };
             bubbles.push(newBubble);
         } else {
-          
+
             const newBubble = {
                 x: event.offsetX,
                 y: event.offsetY,
@@ -310,6 +440,9 @@ canvasFrame.addEventListener('click', function(event) {
             };
             bubbles.push(newBubble);
         }
+    
+        // Redraw canvas after adding the new bubble
+        redrawCanvas();
     }
 	createShooterBubble(context);
 });
@@ -420,20 +553,15 @@ function redrawCanvas() {
         context.closePath();
     });
 
-    
-    context.beginPath();
-    context.arc(shooterBubble.x, shooterBubble.y, shooterBubble.radius, 0, Math.PI * 2);
-    context.fillStyle = shooterBubble.color;
-    context.fill();
-    context.closePath();
+    createShooterBubble(context);
+    // context.beginPath();
+    // context.arc(shooterBubble.x, shooterBubble.y, shooterBubble.radius, 0, Math.PI * 2);
+    // context.fillStyle = shooterBubble.color;
+    // context.fill();
+    // context.closePath();
 }
 
 
-
-
-
-
-    
 
             
 
