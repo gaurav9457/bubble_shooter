@@ -3,6 +3,7 @@ let shooterBubble;
 let score=0;
 let timerInterval;
 let timerDisplay = document.getElementById('timmerDisplay');
+let gameStarted = false;
 
 window.onload = function() {
     let canvasFrame = document.getElementById("myCanvas");
@@ -33,6 +34,8 @@ function closePopup(){
   score=0;
   displayScore(score);
   //canvasFrame.removeEventListener('mousemove');
+  //canvasFrame.removeEventListener('mousemove');
+  // canvasFrame.removeEventListener('click');
 }
 
 function displayWinAlert(score){
@@ -42,17 +45,24 @@ function displayWinAlert(score){
    winAlertScore.innerHTML=score;
    popup.style.display='block';
    clearInterval(timerInterval);
+   gameStarted=false;
+  // canvasFrame.removeEventListener('mousemove');
+   //canvasFrame.removeEventListener('click');
 }
 
 function displayLoseAlert(score){
+    console.log(score,"score");
   let losePopupDiv=document.getElementById('losePopupDiv');
    let loseAlertScore=document.getElementById('loseAlertScore');
    loseAlertScore.innerHTML=score;
    losePopupDiv.style.display='block';
    clearInterval(timerInterval);
+   gameStarted=false;
+ //  canvasFrame.removeEventListener('mousemove');
+ //  canvasFrame.removeEventListener('click');
 }
 
-const targetTimeInSeconds = 5;
+const targetTimeInSeconds = 200;
 
 function updateTimerDisplay(seconds) {
 	
@@ -72,8 +82,8 @@ function startTimer() {
 
         if (currentTime <= 0) {
             clearInterval(timerInterval);
-			initializeGame();
             displayLoseAlert(score);
+           // initializeGame();
             
         }
     }, 1000);
@@ -102,6 +112,7 @@ startBtn.addEventListener('click', function() {
 
 
 function initializeGame() {
+    gameStarted=true;
     closePopup();
     context.clearRect(0, 0, canvasFrame.width, canvasFrame.height);
 
@@ -109,7 +120,6 @@ function initializeGame() {
     score = 0;
     displayScore(score);
 
-   
     bubbles = [];
     mainObj.createBubble(context);
  
@@ -207,6 +217,9 @@ function createShooterBubble(context) {
 
 
 canvasFrame.addEventListener('mousemove', function(event) {
+    if (!gameStarted) {
+        return;
+    }
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
@@ -242,13 +255,14 @@ canvasFrame.addEventListener('mousemove', function(event) {
 
 
 canvasFrame.addEventListener('click', function(event) {
+    if (!gameStarted) {
+        return;
+    }
 
-	if(bubbles.length <= 55){
-		//console.log("win condition");
+	if(bubbles.length <= 1){
 	 displayWinAlert(score);
 	 redrawCanvas();
 	 score=0;
-
 	 }
      let clickedBubble = null;
 
@@ -300,23 +314,36 @@ canvasFrame.addEventListener('click', function(event) {
 		// moveShooterBubbleToward(clickedBubble);
         //-----------------------------------------------------------------Color matched--------------------------------------
         if (clickedBubble.color === shooterBubble.color) {
-            console.log("Colors match");
-           score += 200;
-		   displayScore(score);
+            console.log("Colors match");        
+            // Check if there are at least three adjacent bubbles of the same color
 
-		   
-            bubbles = bubbles.filter(bubble => {
-              return !areAdjacentAndSameColor(clickedBubble, bubble);
-         });
-            redrawCanvas();
-
-        }
-		              
-
-		else {
+            const sameColorAdjacentBubbles = bubbles.filter(bubble => {        
+                return areAdjacentAndSameColor(clickedBubble, bubble);
+            });
+                
+        
+            if (sameColorAdjacentBubbles.length >= 2) {
+                score += 200;
+                displayScore(score);
+                bubbles = bubbles.filter(bubble => {            
+                    return !areAdjacentAndSameColor(clickedBubble, bubble);
+                });
+                redrawCanvas();
+            } else {
+                // If there are less than three adjacent bubbles of the same color, place the shooter bubble at the clicked position
+                const newBubble = {
+                    x: clickedBubble.x,
+                    y: clickedBubble.y + clickedBubble.radius + 2 + shooterBubble.radius,
+                    radius: shooterBubble.radius,
+                    color: shooterBubble.color 
+                };
+                bubbles.push(newBubble);
+                redrawCanvas();
+            }
+        } else {
             console.log("Colors don't match");
+        
             let adjacentBubble = null;
-           
             for (let i = 0; i < bubbles.length; i++) {
                 const bubble = bubbles[i];
                 if (bubble !== clickedBubble) {
@@ -327,12 +354,10 @@ canvasFrame.addEventListener('click', function(event) {
                     }
                 }
             }
-
+        
             if (adjacentBubble) {
-               
                 const adjacentX = adjacentBubble.x;
                 const adjacentY = adjacentBubble.y + 2 * adjacentBubble.radius + shooterBubble.radius; // Adjust as needed
-                //moveShooterBubbleToward(clickedBubble); 
                 const newBubble = {
                     x: adjacentX,
                     y: adjacentY,
@@ -340,9 +365,10 @@ canvasFrame.addEventListener('click', function(event) {
                     color: shooterBubble.color
                 };
                 bubbles.push(newBubble);
-				//createShooterBubble(context, clickedBubble);
+                redrawCanvas();
             } else {
-               
+                // If there are no adjacent bubbles, place the shooter bubble at some default position
+                // Here, I'm placing it below the clicked bubble with a small gap
                 const newBubble = {
                     x: clickedBubble.x,
                     y: clickedBubble.y + clickedBubble.radius + 2 + shooterBubble.radius,
@@ -350,11 +376,14 @@ canvasFrame.addEventListener('click', function(event) {
                     color: shooterBubble.color 
                 };
                 bubbles.push(newBubble);
+                redrawCanvas();
             }
-            redrawCanvas();
         }
+        
+        
 
     }
+
 	else {
         console.log("Clicked outside of any bubble");
 
