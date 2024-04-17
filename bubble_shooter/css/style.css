@@ -3,40 +3,220 @@
     padding:0px;
     }
     #container{
-    /* background-color:green; */
+    background-image:url('https://pics.craiyon.com/2023-11-17/Ub7mpFjwSu6qTSwtTXauhw.webp');
+	background-repeat:no-repeat;
+	background-size:cover;
+	height:100vh;
+	width:100vw;
+	margin:auto;
     
     }
     #timmerParent{
     float:left;
     height:600px;
-    width:500px;
+    width:630px;
     /* background-color:blue; */
-    margin-left:100px;
+    /* margin-left:100px; */
+	margin-top:150px;
     }
     #bubbleMain{
     float:left;
-    height:650px;
+    height:670px;
     width:700px;
     /* background-color:red; */
-    margin-left:100px;
+    margin-left:10px;
+	margin-top:50px;
+
     }
     #timmer{
-    height:200px;
-    width:300px;
+    height:100px;
+    width:200px;
     /* background-color:red; */
-    margin:50px;
+    margin:40px;
+	float:left;
+	/* margin-top:400px; */
     }
     #score{
-    height:200px;
-    width:300px;
+    height:100px;
+    width:250px;
     /* background-color:green; */
     margin:50px;
+	float:left;
+	/* margin-top:400px; */
     }
     .scoreDisplay{
     font-size:35px;
     text-align:center;
+	color:white;
+	font-family: 'Brush Script MT', cursive;
     
     }
     #timmerDisplay{
     font-size:35px;
+	color:white;
+	font-family: 'Brush Script MT', cursive;
     }
+	#logo{
+	float:left;
+	}
+	#myCanvas{
+	 background-image:    url(../images/lake.jpg);
+     background-size:     cover;                      
+    /* background-repeat:   no-repeat; */
+     /* background-position: center; */
+	 /* background-color:black; */
+	}
+	#startBtn{
+	cursor:pointer;
+	margin-left:80px;	
+
+	}
+	#instructionContainer{
+	height:230px;
+	width:400px;
+	background-image:url('../images/inst-bg.png');
+	/* background-position: center; */
+	background-repeat:   no-repeat; 
+	background-size: 400px 230px;
+	position:absolute;
+	top:500px;
+	left:20px;
+	}
+	#content{
+	padding:20px 10px 0px 38px;
+	margin-top:10px;
+	}
+	.instWords{
+	font-family: 'Brush Script MT', cursive;
+	font-size:14px;
+	line-height:12px;
+	}
+	#popupDiv{
+	height:100%;
+	width:100%;
+	position:absolute;
+	 background-color: rgb(33, 33, 32,0.8);
+	top:0px;
+	display:none;
+	}
+	#winnerAlert{
+	height:500px;
+	width:400px;
+    /* margin:auto; */
+	background-image:url('../images/winner.png');
+	 background-position: center; 
+	background-repeat:   no-repeat; 
+	 background-size: contain; 
+	 position:absolute;
+	 inset:0;
+	 margin:auto;
+	 
+
+	}
+	#winnerContentAlert{
+	/* margin-left:50px; */
+	/* position:absolute; */
+	/*  top:120px; 
+	 left:70px; */
+	 /* background-color:red; */
+	 margin-left:70px;
+	 margin-top:100px;
+
+	}
+	#winAlertHeading{
+	font-size:33px;
+	font-family: 'Brush Script MT', cursive;
+	color:#f953c6;
+	
+
+	}
+	#winHeading{
+	font-size:27px;
+	font-family: 'Brush Script MT', cursive;
+	color:#f953c6;
+	margin-top:10px;
+	margin-left:55px;
+	}
+	#winAlertScoreBoard{
+	 font-size:20px;
+	font-family: 'Brush Script MT', cursive;
+	color:#f953c6;
+		margin:30px;
+	margin-top:50px;
+	}
+	#closeBtn{
+	position:absolute;
+	top:68px;
+	right:65px;
+	cursor:pointer;
+	}
+	#winAlertScore{
+	font-size:25px;
+	margin:50px 20px 10px 30px;
+	}
+	#loseAlert{
+	height:500px;
+	width:500px;
+	background-image:url('../images/loose.png');
+	background-position: center; 
+	background-repeat:   no-repeat; 
+	background-size: contain; 
+	position:absolute;
+	inset:0;
+	margin:auto;
+	
+
+	}
+	#losePopupDiv{
+	height:100%;
+	width:100%;
+	position:absolute;
+	 background-color: rgb(33, 33, 32,0.8);
+	top:0px;
+	display:none;
+	}
+	#gameOverHeading{
+	margin-left:150px;
+	margin-top:70px;
+	}
+	#loseHeading{
+	margin-left:130px;
+	margin-top:50px;
+	}
+	#loseScoreBoardDiv{
+	margin-left:130px;
+	margin-top:30px;
+	}
+	#loseAlertScoreBoard{
+	font-size:23px;
+	font-family: 'Brush Script MT', cursive;
+	color:#f953c6;
+	}
+	#startHead{
+	margin-left:127px;
+	margin-top:71px;
+	color:white;
+	font-family: 'Brush Script MT', cursive;
+	font-size:23px;
+	cursor:pointer;
+	}
+	#exitHead{
+	margin-left:296px;
+	margin-top:-35px;
+	color:white;
+	font-family: 'Brush Script MT', cursive;
+	cursor:pointer;
+	}
+	#startHead:hover{
+	color:black;
+	
+	}
+	#exitHead:hover{
+	color:black;
+	}
+	#loseCloseBtn{
+	position:absolute;
+	top:85px;
+	right:13px;
+	cursor:pointer;
+	}
