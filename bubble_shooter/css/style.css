@@ -103,7 +103,7 @@
 	margin-top:10px;
 	}
 	.instWords{
-	font-family: 'Brush Script MT', cursive;
+	font-family: 'Brush Script ', cursive;
 	font-size:14px;
 	line-height:20px;
 	}
@@ -141,7 +141,7 @@
 	}
 	#winAlertHeading{
 	font-size:33px;
-	font-family: 'Brush Script MT', cursive;
+	font-family: 'Brush Script ', cursive;
 	color:#DA4453;
 	margin-left:14px;
 	
@@ -207,14 +207,14 @@
 	}
 	#loseAlertScoreBoard{
 	font-size:23px;
-	font-family: 'Brush Script MT', cursive;
+	font-family: 'Brush Script ', cursive;
 	color:#f953c6;
 	}
 	#startHead{
 	margin-left:120px;
 	margin-top:71px;
 	color:white;
-	font-family: 'Brush Script MT', cursive;
+	font-family: 'Brush Script ', cursive;
 	font-size:23px;
 	cursor:pointer;
 	}
@@ -222,7 +222,7 @@
 	margin-left:296px;
 	margin-top:-35px;
 	color:white;
-	font-family: 'Brush Script MT', cursive;
+	font-family: 'Brush Script ', cursive;
 	cursor:pointer;
 	}
 	#startHead:hover{
@@ -250,6 +250,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 	overflow:scroll;
+	/* display: none; */
 
 	}
 	#mainPopupContent{
@@ -275,7 +276,7 @@
     border:none;
 	margin-left:30px;
 	font-size:20px;
-	font-family: 'Brush Script MT', cursive;
+	font-family: 'Brush Script', cursive;
 	}
 	select option{
     background-color:#0c4e5a;
